@@ -1,10 +1,10 @@
 <template>
   <div class="el-district">
-    <el-select v-model="province" :clearable="clearable" placeholder="省份" @change="provinceChange">
+    <el-select v-model="value[0]" :clearable="clearable" placeholder="省份" @change="provinceChange">
       <el-option v-for="(item, index) in provinces" :key="index" :label="item" :value="item" />
     </el-select>
     <el-select
-      v-model="city"
+      v-model="value[1]"
       :clearable="clearable"
       placeholder="城市"
       @change="cityChange"
@@ -13,10 +13,9 @@
       <el-option v-for="(item, index) in cities" :key="index" :label="item" :value="item" />
     </el-select>
     <el-select
-      v-model="area"
+      v-model="value[2]"
       :clearable="clearable"
       placeholder="区域"
-      @change="areaChange"
       :style="{'margin-left': spacing + 'px'}"
     >
       <el-option v-for="(item, index) in areas" :key="index" :label="item" :value="item" />
@@ -30,6 +29,10 @@ import DISTRICTS from './districts';
 export default {
   name: 'ElDistrict',
   props: {
+    value: {
+      type: Array,
+      default: ['', '', '']
+    },
     clearable: {
       type: Boolean,
       default: false
@@ -41,10 +44,7 @@ export default {
       districts: DISTRICTS,
       provinces: [],
       cities: [],
-      areas: [],
-      province: '',
-      city: '',
-      area: ''
+      areas: []
     };
   },
   created() {
@@ -52,19 +52,13 @@ export default {
   },
   methods: {
     provinceChange() {
-      this.$emit('province-change', this.province);
-      this.cities = this.province ? this.districts[this.getCode(this.province, 'province')] : [];
-      this.city = '';
+      this.cities = this.value[0] ? this.districts[this.getCode(this.value[0], 'province')] : [];
+      this.value[1] = '';
       this.cityChange();
     },
     cityChange() {
-      this.$emit('city-change', this.city);
-      this.areas = this.city ? this.districts[this.getCode(this.city, 'city')] : [];
-      this.area = '';
-      this.areaChange();
-    },
-    areaChange() {
-      this.$emit('area-change', this.area);
+      this.areas = this.value[1] ? this.districts[this.getCode(this.value[1], 'city')] : [];
+      this.value[2] = '';
     },
     getCode(value, type) {
       for (let x in this.districts) {
