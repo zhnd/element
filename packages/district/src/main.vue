@@ -49,6 +49,8 @@ export default {
   },
   created() {
     this.provinces = this.districts[100000];
+    this.cities = this.value[0] ? this.districts[this.getCode(this.value[0], 'province')] : [];
+    this.areas = this.value[1] ? this.districts[this.getCode(this.value[1], 'city')] : [];
   },
   methods: {
     provinceChange() {
