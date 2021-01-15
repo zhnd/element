@@ -81,5 +81,6 @@
   "avatar": "./packages/avatar/index.js",
   "drawer": "./packages/drawer/index.js",
   "popconfirm": "./packages/popconfirm/index.js",
-  "district": "./packages/district/index.js"
+  "district": "./packages/district/index.js",
+  "okr-tree": "./packages/okr-tree/index.js"
 }
